@@ -130,14 +130,13 @@ function selectTraceFile() {
         },
       ],
     },
-    (fileNames) => {
-      if (fileNames && fileNames.length > 0) {
-        const fileName = fileNames[0];
-        console.log(fileName);
-        mainWindow.webContents.send('open-file', fileName);
-      }
-    },
-  );
+  ).then((result) => {
+    if (!result.canceled && result.filePaths && result.filePaths.length > 0) {
+      const fileName = result.filePaths[0];
+      console.log(fileName);
+      mainWindow.webContents.send('open-file', fileName);
+    }
+  });
 }
 
 // Linux and Windows
